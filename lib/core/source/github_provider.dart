@@ -14,16 +14,17 @@ class GithubProvider {
   static final _authLink = AuthLink(
       getToken: () =>
           'Bearer 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');
+  // TODO set via RemoteConfig
 
   static final _link = _authLink.concat(_httpLink);
 
   Future<Map<String, dynamic>?> sendQuery(
     String queryText,
-    Map<String, dynamic> parameters,
+    Map<String, dynamic>? parameters,
   ) async {
     final QueryOptions options = QueryOptions(
       document: gql(queryText),
-      variables: parameters,
+      variables: parameters ?? {},
     );
 
     final QueryResult result = await _client.query(options);

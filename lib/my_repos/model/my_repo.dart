@@ -1,12 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'repo.freezed.dart';
+part 'my_repo.freezed.dart';
 
 @freezed
-class Repo with _$Repo {
-  const factory Repo({
+class MyRepo with _$MyRepo {
+  const factory MyRepo({
     required String id,
     required String name,
     required bool viewerHasStarred,
-  }) = _Repo;
+  }) = _MyRepo;
 }

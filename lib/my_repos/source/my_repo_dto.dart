@@ -1,24 +1,24 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:git_stat/chart/model/repo.dart';
+import 'package:git_stat/my_repos/model/my_repo.dart';
 
-part 'repo_dto.g.dart';
+part 'my_repo_dto.g.dart';
 
 @JsonSerializable(createPerFieldToJson: false)
-class RepoDto {
+class MyRepoDto {
   final String id;
   final String name;
   final bool viewerHasStarred;
 
-  RepoDto({
+  MyRepoDto({
     required this.id,
     required this.name,
     required this.viewerHasStarred,
   });
 
-  factory RepoDto.fromJson(Map<String, dynamic> json) =>
-      _$RepoDtoFromJson(json);
+  factory MyRepoDto.fromJson(Map<String, dynamic> json) =>
+      _$MyRepoDtoFromJson(json);
 
-  Repo toDomain() => Repo(
+  MyRepo toDomain() => MyRepo(
         id: id,
         name: name,
         viewerHasStarred: viewerHasStarred,

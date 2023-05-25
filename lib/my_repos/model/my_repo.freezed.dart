@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'repo.dart';
+part of 'my_repo.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,27 +15,27 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$Repo {
+mixin _$MyRepo {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   bool get viewerHasStarred => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $RepoCopyWith<Repo> get copyWith => throw _privateConstructorUsedError;
+  $MyRepoCopyWith<MyRepo> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RepoCopyWith<$Res> {
-  factory $RepoCopyWith(Repo value, $Res Function(Repo) then) =
-      _$RepoCopyWithImpl<$Res, Repo>;
+abstract class $MyRepoCopyWith<$Res> {
+  factory $MyRepoCopyWith(MyRepo value, $Res Function(MyRepo) then) =
+      _$MyRepoCopyWithImpl<$Res, MyRepo>;
   @useResult
   $Res call({String id, String name, bool viewerHasStarred});
 }
 
 /// @nodoc
-class _$RepoCopyWithImpl<$Res, $Val extends Repo>
-    implements $RepoCopyWith<$Res> {
-  _$RepoCopyWithImpl(this._value, this._then);
+class _$MyRepoCopyWithImpl<$Res, $Val extends MyRepo>
+    implements $MyRepoCopyWith<$Res> {
+  _$MyRepoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -67,18 +67,19 @@ class _$RepoCopyWithImpl<$Res, $Val extends Repo>
 }
 
 /// @nodoc
-abstract class _$$_RepoCopyWith<$Res> implements $RepoCopyWith<$Res> {
-  factory _$$_RepoCopyWith(_$_Repo value, $Res Function(_$_Repo) then) =
-      __$$_RepoCopyWithImpl<$Res>;
+abstract class _$$_MyRepoCopyWith<$Res> implements $MyRepoCopyWith<$Res> {
+  factory _$$_MyRepoCopyWith(_$_MyRepo value, $Res Function(_$_MyRepo) then) =
+      __$$_MyRepoCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String name, bool viewerHasStarred});
 }
 
 /// @nodoc
-class __$$_RepoCopyWithImpl<$Res> extends _$RepoCopyWithImpl<$Res, _$_Repo>
-    implements _$$_RepoCopyWith<$Res> {
-  __$$_RepoCopyWithImpl(_$_Repo _value, $Res Function(_$_Repo) _then)
+class __$$_MyRepoCopyWithImpl<$Res>
+    extends _$MyRepoCopyWithImpl<$Res, _$_MyRepo>
+    implements _$$_MyRepoCopyWith<$Res> {
+  __$$_MyRepoCopyWithImpl(_$_MyRepo _value, $Res Function(_$_MyRepo) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -88,7 +89,7 @@ class __$$_RepoCopyWithImpl<$Res> extends _$RepoCopyWithImpl<$Res, _$_Repo>
     Object? name = null,
     Object? viewerHasStarred = null,
   }) {
-    return _then(_$_Repo(
+    return _then(_$_MyRepo(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -107,8 +108,8 @@ class __$$_RepoCopyWithImpl<$Res> extends _$RepoCopyWithImpl<$Res, _$_Repo>
 
 /// @nodoc
 
-class _$_Repo implements _Repo {
-  const _$_Repo(
+class _$_MyRepo implements _MyRepo {
+  const _$_MyRepo(
       {required this.id, required this.name, required this.viewerHasStarred});
 
   @override
@@ -120,14 +121,14 @@ class _$_Repo implements _Repo {
 
   @override
   String toString() {
-    return 'Repo(id: $id, name: $name, viewerHasStarred: $viewerHasStarred)';
+    return 'MyRepo(id: $id, name: $name, viewerHasStarred: $viewerHasStarred)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Repo &&
+            other is _$_MyRepo &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.viewerHasStarred, viewerHasStarred) ||
@@ -140,15 +141,15 @@ class _$_Repo implements _Repo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RepoCopyWith<_$_Repo> get copyWith =>
-      __$$_RepoCopyWithImpl<_$_Repo>(this, _$identity);
+  _$$_MyRepoCopyWith<_$_MyRepo> get copyWith =>
+      __$$_MyRepoCopyWithImpl<_$_MyRepo>(this, _$identity);
 }
 
-abstract class _Repo implements Repo {
-  const factory _Repo(
+abstract class _MyRepo implements MyRepo {
+  const factory _MyRepo(
       {required final String id,
       required final String name,
-      required final bool viewerHasStarred}) = _$_Repo;
+      required final bool viewerHasStarred}) = _$_MyRepo;
 
   @override
   String get id;
@@ -158,5 +159,6 @@ abstract class _Repo implements Repo {
   bool get viewerHasStarred;
   @override
   @JsonKey(ignore: true)
-  _$$_RepoCopyWith<_$_Repo> get copyWith => throw _privateConstructorUsedError;
+  _$$_MyRepoCopyWith<_$_MyRepo> get copyWith =>
+      throw _privateConstructorUsedError;
 }

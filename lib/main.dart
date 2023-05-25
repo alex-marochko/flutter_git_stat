@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:git_stat/chart/presenter/chart_cubit.dart';
+import 'package:git_stat/app/view/app_page.dart';
+import 'package:git_stat/my_repos/presenter/my_repos_cubit.dart';
+import 'package:git_stat/my_repos/view/my_repos_page.dart';
 
-import 'chart/view/chart_page.dart';
 // import 'package:graphql/client.dart';
 
 void main() async {
@@ -22,14 +23,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter GitStat',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
-      home: BlocProvider<ChartCubit>(
-        create: (_) => ChartCubit(),
-        child: const ChartPage(),
-      ),
+      home: const AppPage(),
     );
     // return GraphQLProvider(
     //   client: client,
@@ -54,8 +52,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   String readRepositories = """
   query ReadRepositories(\$nRepositories: Int!) {
     viewer {
@@ -70,21 +66,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   """;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: const ChartPage(),
+      body: const MyReposPage(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<ChartCubit>().fetchMyRepos(),
+        onPressed: () => context.read<MyReposCubit>().fetchMyRepos(),
         tooltip: 'Get repositories',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
