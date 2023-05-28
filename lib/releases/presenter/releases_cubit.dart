@@ -22,7 +22,7 @@ class ReleasesCubit extends Cubit<ReleasesState> {
     try {
       // fetching repositories updated/released within the last month
       repos = await _repository.getReleasedRepositories(
-        DateTime.now().subtract(const Duration(days: 30)),
+        DateTime.now().subtract(const Duration(days: 180)),
       );
     } catch (e) {
       emit(const ReleasesState(status: ReleasesStatus.failure));

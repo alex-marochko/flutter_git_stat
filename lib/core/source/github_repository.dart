@@ -50,7 +50,7 @@ class GithubRepository {
               search(
                 query: "language:Dart stars:>100 created:>=$fromString"
                 type: REPOSITORY
-                first: 10
+                first: 50
               ) {
                 repositoryCount
                 edges {
@@ -58,10 +58,14 @@ class GithubRepository {
                     ... on Repository {
                       id
                       name
+                      nameWithOwner
                       description
                       url
                       stargazers {
                         totalCount
+                      }
+                      owner {
+                        avatarUrl
                       }
                       releases(last: 1, orderBy: {field: CREATED_AT, direction: DESC}) {
                         edges {

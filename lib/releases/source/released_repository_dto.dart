@@ -33,16 +33,20 @@ import 'package:git_stat/releases/source/release_dto.dart';
 class ReleasedRepositoryDto extends Equatable {
   final String id;
   final String name;
+  final String nameWithOwner;
   final String? description;
   final String url;
+  final String ownerAvatarUrl;
   final int stargazersCount;
   final List<ReleaseDto> releases;
 
   const ReleasedRepositoryDto({
     required this.id,
     required this.name,
+    required this.nameWithOwner,
     required this.description,
     required this.url,
+    required this.ownerAvatarUrl,
     required this.stargazersCount,
     required this.releases,
   });
@@ -55,8 +59,10 @@ class ReleasedRepositoryDto extends Equatable {
     return ReleasedRepositoryDto(
       id: json['node']['id'],
       name: json['node']['name'],
+      nameWithOwner: json['node']['nameWithOwner'],
       description: json['node']['description'],
       url: json['node']['url'],
+      ownerAvatarUrl: json['node']['owner']['avatarUrl'],
       stargazersCount: json['node']['stargazers']['totalCount'],
       releases: releases,
     );
@@ -65,7 +71,7 @@ class ReleasedRepositoryDto extends Equatable {
   @override
   List<Object> get props => [
         id,
-        name,
+        nameWithOwner,
         url,
         stargazersCount,
         releases,
@@ -74,8 +80,10 @@ class ReleasedRepositoryDto extends Equatable {
   ReleasedRepository toModel() => ReleasedRepository(
         id: id,
         name: name,
+        nameWithOwner: nameWithOwner,
         description: description,
         url: url,
+        ownerAvatarUrl: ownerAvatarUrl,
         stargazersCount: stargazersCount,
         releases: releases.map((e) => e.toModel()).toList(),
       );

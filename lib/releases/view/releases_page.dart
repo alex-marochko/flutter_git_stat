@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:git_stat/releases/presenter/releases_cubit.dart';
@@ -8,27 +10,49 @@ class ReleasesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ReleasesCubit>(
-      create: (_) => ReleasesCubit(),
+      create: (_) {
+        final cubit = ReleasesCubit();
+        cubit.fetchReleases();
+        return cubit;
+      },
       child:
           BlocBuilder<ReleasesCubit, ReleasesState>(builder: (context, state) {
         return switch (state.status) {
-          ReleasesStatus.initial => Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  context.read<ReleasesCubit>().fetchReleases();
-                },
-                child: const Text('Push me'),
-              ),
-            ),
-          ReleasesStatus.loading => const CircularProgressIndicator(),
-          ReleasesStatus.success => ListView.builder(
+          ReleasesStatus.initial ||
+          ReleasesStatus.loading =>
+            const CircularProgressIndicator(),
+          ReleasesStatus.success => ListView.separated(
               itemCount: state.repos.length,
               itemBuilder: (context, id) {
                 return ListTile(
-                  title: Text(state.repos[id].name),
+                  enableFeedback: true,
+                  onTap: () {
+                    log('hey');
+                  },
+                  onLongPress: () {
+                    log('hey');
+                  },
+                  leading: CircleAvatar(
+                    backgroundImage:
+                        NetworkImage(state.repos[id].ownerAvatarUrl),
+                    // child: Image.network(state.repos[id].ownerAvatarUrl),
+                  ),
+                  title: Text(state.repos[id].nameWithOwner),
                   subtitle: Text(state.repos[id].url),
                 );
-              }),
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return Container(
+                  width: double.infinity,
+                  height: 1,
+                  margin: const EdgeInsets.only(left: 64),
+                  decoration: const ShapeDecoration(
+                    shape: LinearBorder(),
+                    color: Color(0xFFDDDDDD),
+                  ),
+                );
+              },
+            ),
           _ => const Center(child: Text('Oops'))
         };
       }),
