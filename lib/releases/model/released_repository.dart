@@ -13,6 +13,7 @@ class ReleasedRepository with _$ReleasedRepository {
     required String url,
     required String ownerAvatarUrl,
     required int stargazersCount,
+    required DateTime createdAt,
     required List<Release> releases,
   }) = _ReleasedRepository;
 }

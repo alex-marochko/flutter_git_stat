@@ -38,6 +38,7 @@ class ReleasedRepositoryDto extends Equatable {
   final String url;
   final String ownerAvatarUrl;
   final int stargazersCount;
+  final DateTime createdAt;
   final List<ReleaseDto> releases;
 
   const ReleasedRepositoryDto({
@@ -48,6 +49,7 @@ class ReleasedRepositoryDto extends Equatable {
     required this.url,
     required this.ownerAvatarUrl,
     required this.stargazersCount,
+    required this.createdAt,
     required this.releases,
   });
 
@@ -64,6 +66,7 @@ class ReleasedRepositoryDto extends Equatable {
       url: json['node']['url'],
       ownerAvatarUrl: json['node']['owner']['avatarUrl'],
       stargazersCount: json['node']['stargazers']['totalCount'],
+      createdAt: DateTime.parse(json['node']['createdAt']),
       releases: releases,
     );
   }
@@ -71,10 +74,6 @@ class ReleasedRepositoryDto extends Equatable {
   @override
   List<Object> get props => [
         id,
-        nameWithOwner,
-        url,
-        stargazersCount,
-        releases,
       ];
 
   ReleasedRepository toModel() => ReleasedRepository(
@@ -85,6 +84,7 @@ class ReleasedRepositoryDto extends Equatable {
         url: url,
         ownerAvatarUrl: ownerAvatarUrl,
         stargazersCount: stargazersCount,
+        createdAt: createdAt,
         releases: releases.map((e) => e.toModel()).toList(),
       );
 }

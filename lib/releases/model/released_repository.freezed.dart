@@ -23,6 +23,7 @@ mixin _$ReleasedRepository {
   String get url => throw _privateConstructorUsedError;
   String get ownerAvatarUrl => throw _privateConstructorUsedError;
   int get stargazersCount => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   List<Release> get releases => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -44,6 +45,7 @@ abstract class $ReleasedRepositoryCopyWith<$Res> {
       String url,
       String ownerAvatarUrl,
       int stargazersCount,
+      DateTime createdAt,
       List<Release> releases});
 }
 
@@ -67,6 +69,7 @@ class _$ReleasedRepositoryCopyWithImpl<$Res, $Val extends ReleasedRepository>
     Object? url = null,
     Object? ownerAvatarUrl = null,
     Object? stargazersCount = null,
+    Object? createdAt = null,
     Object? releases = null,
   }) {
     return _then(_value.copyWith(
@@ -98,6 +101,10 @@ class _$ReleasedRepositoryCopyWithImpl<$Res, $Val extends ReleasedRepository>
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       releases: null == releases
           ? _value.releases
           : releases // ignore: cast_nullable_to_non_nullable
@@ -122,6 +129,7 @@ abstract class _$$_ReleasedRepositoryCopyWith<$Res>
       String url,
       String ownerAvatarUrl,
       int stargazersCount,
+      DateTime createdAt,
       List<Release> releases});
 }
 
@@ -143,6 +151,7 @@ class __$$_ReleasedRepositoryCopyWithImpl<$Res>
     Object? url = null,
     Object? ownerAvatarUrl = null,
     Object? stargazersCount = null,
+    Object? createdAt = null,
     Object? releases = null,
   }) {
     return _then(_$_ReleasedRepository(
@@ -174,6 +183,10 @@ class __$$_ReleasedRepositoryCopyWithImpl<$Res>
           ? _value.stargazersCount
           : stargazersCount // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       releases: null == releases
           ? _value._releases
           : releases // ignore: cast_nullable_to_non_nullable
@@ -193,6 +206,7 @@ class _$_ReleasedRepository implements _ReleasedRepository {
       required this.url,
       required this.ownerAvatarUrl,
       required this.stargazersCount,
+      required this.createdAt,
       required final List<Release> releases})
       : _releases = releases;
 
@@ -210,6 +224,8 @@ class _$_ReleasedRepository implements _ReleasedRepository {
   final String ownerAvatarUrl;
   @override
   final int stargazersCount;
+  @override
+  final DateTime createdAt;
   final List<Release> _releases;
   @override
   List<Release> get releases {
@@ -220,7 +236,7 @@ class _$_ReleasedRepository implements _ReleasedRepository {
 
   @override
   String toString() {
-    return 'ReleasedRepository(id: $id, name: $name, nameWithOwner: $nameWithOwner, description: $description, url: $url, ownerAvatarUrl: $ownerAvatarUrl, stargazersCount: $stargazersCount, releases: $releases)';
+    return 'ReleasedRepository(id: $id, name: $name, nameWithOwner: $nameWithOwner, description: $description, url: $url, ownerAvatarUrl: $ownerAvatarUrl, stargazersCount: $stargazersCount, createdAt: $createdAt, releases: $releases)';
   }
 
   @override
@@ -239,6 +255,8 @@ class _$_ReleasedRepository implements _ReleasedRepository {
                 other.ownerAvatarUrl == ownerAvatarUrl) &&
             (identical(other.stargazersCount, stargazersCount) ||
                 other.stargazersCount == stargazersCount) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             const DeepCollectionEquality().equals(other._releases, _releases));
   }
 
@@ -252,6 +270,7 @@ class _$_ReleasedRepository implements _ReleasedRepository {
       url,
       ownerAvatarUrl,
       stargazersCount,
+      createdAt,
       const DeepCollectionEquality().hash(_releases));
 
   @JsonKey(ignore: true)
@@ -271,6 +290,7 @@ abstract class _ReleasedRepository implements ReleasedRepository {
       required final String url,
       required final String ownerAvatarUrl,
       required final int stargazersCount,
+      required final DateTime createdAt,
       required final List<Release> releases}) = _$_ReleasedRepository;
 
   @override
@@ -287,6 +307,8 @@ abstract class _ReleasedRepository implements ReleasedRepository {
   String get ownerAvatarUrl;
   @override
   int get stargazersCount;
+  @override
+  DateTime get createdAt;
   @override
   List<Release> get releases;
   @override

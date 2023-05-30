@@ -45,6 +45,7 @@ class GithubRepository {
   Future<dynamic> getReleasedRepositories(DateTime fromDateTime) async {
     final formatter = DateFormat('yyyy-MM-dd');
     final String fromString = formatter.format(fromDateTime);
+    // TODO the list looks a bit strange when is sorted by stars. Change to date?
     final updatedReposQuery = '''
             {
               search(
@@ -61,6 +62,7 @@ class GithubRepository {
                       nameWithOwner
                       description
                       url
+                      createdAt
                       stargazers {
                         totalCount
                       }
