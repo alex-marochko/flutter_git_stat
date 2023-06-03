@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:git_stat/core/view/repository_page.dart';
 import 'package:git_stat/releases/model/released_repository.dart';
 import 'package:git_stat/releases/presenter/releases_cubit.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,7 @@ class ReleasesPage extends StatelessWidget {
       },
       child: BlocConsumer<ReleasesCubit, ReleasesState>(
           listener: (context, state) {
-        // TODO implement
+        // TODO implement or change back to BlocBuilder
       }, builder: (context, state) {
         return switch (state.status) {
           ReleasesStatus.initial ||
@@ -49,35 +50,81 @@ class ReleasesList extends StatelessWidget {
         itemCount: state.repos.length,
         itemBuilder: (context, i) {
           return Card(
-            child: ListTile(
-              key: PageStorageKey(state.repos[i].id),
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(state.repos[i].ownerAvatarUrl),
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
+              side: BorderSide(
+                color: Colors.grey.shade300,
               ),
-              title: Text(
-                state.repos[i].nameWithOwner,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            ),
+            child: ListTile(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          RepositoryPage(repository: state.repos[i]),
+                    ));
+              },
+              key: PageStorageKey(state.repos[i].id),
+              leading: Hero(
+                tag: 'ownerAvatar ${state.repos[i].id}',
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(state.repos[i].ownerAvatarUrl),
+                ),
+              ),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Hero(
+                    tag: 'name ${state.repos[i].id}',
+                    child: Text(
+                      state.repos[i].name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Hero(
+                    tag: 'ownerName ${state.repos[i].id}',
+                    child: Text(
+                      state.repos[i].ownerName,
+                      style: Theme.of(context).textTheme.bodySmall,
+                      // maxLines: 1,
+                      // overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    state.repos[i].description ?? '',
-                    maxLines: 2,
-                    overflow: TextOverflow.fade,
-                    // style: const TextStyle(color: Colors.grey),
+                  Hero(
+                    tag: 'description ${state.repos[i].id}',
+                    child: Text(
+                      state.repos[i].description ?? '',
+                      maxLines: 3,
+                      overflow: TextOverflow.fade,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Colors.grey),
+                      // style: const TextStyle(color: Colors.grey),
+                    ),
                   ),
-                  ...?releasesInfo(state.repos[i]),
+                  ...?releasesInfo(context, state.repos[i]),
                 ],
               ),
               trailing: Column(
                 children: [
-                  Text(
-                    '⭐${state.repos[i].stargazersCount}',
-                    textAlign: TextAlign.center,
+                  Hero(
+                    tag: 'stars ${state.repos[i].id}',
+                    child: Text(
+                      '⭐${state.repos[i].stargazersCount}',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
-                  ...trailingDateAndStatus(state.repos[i]),
+                  ...trailingDateAndStatus(context, state.repos[i]),
                 ],
               ),
             ),
@@ -86,7 +133,8 @@ class ReleasesList extends StatelessWidget {
   }
 }
 
-List<Widget> trailingDateAndStatus(ReleasedRepository repo) {
+List<Widget> trailingDateAndStatus(
+    BuildContext context, ReleasedRepository repo) {
   final hasReleases = repo.releases.isNotEmpty;
 
   DateTime lastUpdate;
@@ -102,26 +150,30 @@ List<Widget> trailingDateAndStatus(ReleasedRepository repo) {
   return [
     Text(
       DateFormat.yMMMd().format(lastUpdate),
-      style: const TextStyle(fontSize: 12, color: Colors.grey),
+      style: Theme.of(context).textTheme.bodySmall,
       textAlign: TextAlign.center,
     ),
     Text(
       hasReleases ? 'update' : 'new',
-      style: TextStyle(
-          fontSize: 12, color: hasReleases ? Colors.grey : Colors.blue),
+      // style: TextStyle(
+      //     fontSize: 12, color: hasReleases ? Colors.grey : Colors.blue),
+      style: Theme.of(context)
+          .textTheme
+          .bodySmall
+          ?.copyWith(color: hasReleases ? Colors.grey : Colors.blue),
       textAlign: TextAlign.center,
     ),
   ];
 }
 
-List<Widget>? releasesInfo(ReleasedRepository repo) {
+List<Widget>? releasesInfo(BuildContext context, ReleasedRepository repo) {
   return repo.releases
       .expand((r) => [
             const SizedBox(height: 8),
             Text(
               '${r.name} - ${r.description.replaceAll(RegExp(r"\s+"), ' ').trim()}',
-              maxLines: 3,
               overflow: TextOverflow.fade,
+              maxLines: 3,
               style: const TextStyle(color: Colors.grey),
             )
           ])

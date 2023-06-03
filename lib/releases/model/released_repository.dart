@@ -9,6 +9,7 @@ class ReleasedRepository with _$ReleasedRepository {
     required String id,
     required String name,
     required String nameWithOwner,
+    required String ownerName,
     String? description,
     required String url,
     required String ownerAvatarUrl,

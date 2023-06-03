@@ -19,6 +19,7 @@ mixin _$ReleasedRepository {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get nameWithOwner => throw _privateConstructorUsedError;
+  String get ownerName => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   String get ownerAvatarUrl => throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $ReleasedRepositoryCopyWith<$Res> {
       {String id,
       String name,
       String nameWithOwner,
+      String ownerName,
       String? description,
       String url,
       String ownerAvatarUrl,
@@ -65,6 +67,7 @@ class _$ReleasedRepositoryCopyWithImpl<$Res, $Val extends ReleasedRepository>
     Object? id = null,
     Object? name = null,
     Object? nameWithOwner = null,
+    Object? ownerName = null,
     Object? description = freezed,
     Object? url = null,
     Object? ownerAvatarUrl = null,
@@ -84,6 +87,10 @@ class _$ReleasedRepositoryCopyWithImpl<$Res, $Val extends ReleasedRepository>
       nameWithOwner: null == nameWithOwner
           ? _value.nameWithOwner
           : nameWithOwner // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerName: null == ownerName
+          ? _value.ownerName
+          : ownerName // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
           ? _value.description
@@ -125,6 +132,7 @@ abstract class _$$_ReleasedRepositoryCopyWith<$Res>
       {String id,
       String name,
       String nameWithOwner,
+      String ownerName,
       String? description,
       String url,
       String ownerAvatarUrl,
@@ -147,6 +155,7 @@ class __$$_ReleasedRepositoryCopyWithImpl<$Res>
     Object? id = null,
     Object? name = null,
     Object? nameWithOwner = null,
+    Object? ownerName = null,
     Object? description = freezed,
     Object? url = null,
     Object? ownerAvatarUrl = null,
@@ -166,6 +175,10 @@ class __$$_ReleasedRepositoryCopyWithImpl<$Res>
       nameWithOwner: null == nameWithOwner
           ? _value.nameWithOwner
           : nameWithOwner // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerName: null == ownerName
+          ? _value.ownerName
+          : ownerName // ignore: cast_nullable_to_non_nullable
               as String,
       description: freezed == description
           ? _value.description
@@ -202,6 +215,7 @@ class _$_ReleasedRepository implements _ReleasedRepository {
       {required this.id,
       required this.name,
       required this.nameWithOwner,
+      required this.ownerName,
       this.description,
       required this.url,
       required this.ownerAvatarUrl,
@@ -216,6 +230,8 @@ class _$_ReleasedRepository implements _ReleasedRepository {
   final String name;
   @override
   final String nameWithOwner;
+  @override
+  final String ownerName;
   @override
   final String? description;
   @override
@@ -236,7 +252,7 @@ class _$_ReleasedRepository implements _ReleasedRepository {
 
   @override
   String toString() {
-    return 'ReleasedRepository(id: $id, name: $name, nameWithOwner: $nameWithOwner, description: $description, url: $url, ownerAvatarUrl: $ownerAvatarUrl, stargazersCount: $stargazersCount, createdAt: $createdAt, releases: $releases)';
+    return 'ReleasedRepository(id: $id, name: $name, nameWithOwner: $nameWithOwner, ownerName: $ownerName, description: $description, url: $url, ownerAvatarUrl: $ownerAvatarUrl, stargazersCount: $stargazersCount, createdAt: $createdAt, releases: $releases)';
   }
 
   @override
@@ -248,6 +264,8 @@ class _$_ReleasedRepository implements _ReleasedRepository {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.nameWithOwner, nameWithOwner) ||
                 other.nameWithOwner == nameWithOwner) &&
+            (identical(other.ownerName, ownerName) ||
+                other.ownerName == ownerName) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.url, url) || other.url == url) &&
@@ -266,6 +284,7 @@ class _$_ReleasedRepository implements _ReleasedRepository {
       id,
       name,
       nameWithOwner,
+      ownerName,
       description,
       url,
       ownerAvatarUrl,
@@ -286,6 +305,7 @@ abstract class _ReleasedRepository implements ReleasedRepository {
       {required final String id,
       required final String name,
       required final String nameWithOwner,
+      required final String ownerName,
       final String? description,
       required final String url,
       required final String ownerAvatarUrl,
@@ -299,6 +319,8 @@ abstract class _ReleasedRepository implements ReleasedRepository {
   String get name;
   @override
   String get nameWithOwner;
+  @override
+  String get ownerName;
   @override
   String? get description;
   @override

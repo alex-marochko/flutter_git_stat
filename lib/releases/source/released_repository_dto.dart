@@ -34,6 +34,7 @@ class ReleasedRepositoryDto extends Equatable {
   final String id;
   final String name;
   final String nameWithOwner;
+  final String ownerName;
   final String? description;
   final String url;
   final String ownerAvatarUrl;
@@ -45,6 +46,7 @@ class ReleasedRepositoryDto extends Equatable {
     required this.id,
     required this.name,
     required this.nameWithOwner,
+    required this.ownerName,
     required this.description,
     required this.url,
     required this.ownerAvatarUrl,
@@ -65,6 +67,7 @@ class ReleasedRepositoryDto extends Equatable {
       description: json['node']['description'],
       url: json['node']['url'],
       ownerAvatarUrl: json['node']['owner']['avatarUrl'],
+      ownerName: json['node']['owner']['login'],
       stargazersCount: json['node']['stargazers']['totalCount'],
       createdAt: DateTime.parse(json['node']['createdAt']),
       releases: releases,
@@ -80,6 +83,7 @@ class ReleasedRepositoryDto extends Equatable {
         id: id,
         name: name,
         nameWithOwner: nameWithOwner,
+        ownerName: ownerName,
         description: description,
         url: url,
         ownerAvatarUrl: ownerAvatarUrl,

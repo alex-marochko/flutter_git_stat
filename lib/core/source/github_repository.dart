@@ -67,6 +67,8 @@ class GithubRepository {
                         totalCount
                       }
                       owner {
+                        id
+                        login                      
                         avatarUrl
                       }
                       releases(last: 1, orderBy: {field: CREATED_AT, direction: DESC}) {
