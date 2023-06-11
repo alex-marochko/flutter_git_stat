@@ -155,8 +155,6 @@ List<Widget> trailingDateAndStatus(
     ),
     Text(
       hasReleases ? 'update' : 'new',
-      // style: TextStyle(
-      //     fontSize: 12, color: hasReleases ? Colors.grey : Colors.blue),
       style: Theme.of(context)
           .textTheme
           .bodySmall

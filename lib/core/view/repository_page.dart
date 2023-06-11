@@ -88,10 +88,12 @@ class RepositoryPage extends StatelessWidget {
                             const BorderRadius.all(Radius.circular(15))),
                     child: Column(
                       children: repository.releases
-                          .map((e) => ListTile(
-                                title: Text(e.name),
-                                subtitle: Text(e.description),
-                              ))
+                          .map(
+                            (e) => ListTile(
+                              title: Text(e.name),
+                              subtitle: Text(e.description),
+                            ),
+                          )
                           .toList(),
                     ),
                   ),
@@ -100,10 +102,6 @@ class RepositoryPage extends StatelessWidget {
           ),
         ),
       ],
-      // child: Center(
-      //     child: Text(
-      //   repository.toString(),
-      // )),
     ));
   }
 }
