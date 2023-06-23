@@ -1,7 +1,9 @@
-import 'dart:math';
+import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:git_stat/core/source/github_repository.dart';
 import 'package:git_stat/core/view/repository_page.dart';
 import 'package:git_stat/releases/model/released_repository.dart';
 import 'package:git_stat/releases/presenter/releases_cubit.dart';
@@ -13,23 +15,37 @@ class ReleasesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ReleasesCubit>(
-      create: (_) {
-        final cubit = ReleasesCubit();
+      create: (context) {
+        final cubit =
+            ReleasesCubit(repository: context.read<GithubRepository>());
+        log('$runtimeType releases_page: creating cubit');
         cubit.fetchReleases();
         return cubit;
       },
       child: BlocConsumer<ReleasesCubit, ReleasesState>(
           listener: (context, state) {
-        // TODO implement or change back to BlocBuilder
+        log('releases_page: $state');
+        if (state.message != null) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Center(
+                  child: Text(
+                state.message!.text,
+              )),
+              backgroundColor: switch (state.message!.status) {
+                MessageStatus.good => Colors.green.shade300,
+                MessageStatus.warning => Colors.blue.shade300,
+                MessageStatus.bad => Colors.red.shade300,
+              }));
+        }
       }, builder: (context, state) {
         return switch (state.status) {
           ReleasesStatus.initial ||
           ReleasesStatus.loading =>
             const CircularProgressIndicator(),
+          ReleasesStatus.failure => Text(state.message!.text),
           ReleasesStatus.success => ReleasesList(
               state: state,
             ),
-          _ => const Center(child: Text('Oops'))
         };
       }),
     );
@@ -142,7 +158,7 @@ List<Widget> trailingDateAndStatus(
   if (hasReleases) {
     final lastUpdateMs = repo.releases
         .map((e) => e.createdAt.millisecondsSinceEpoch)
-        .reduce((value, element) => max(value, element));
+        .reduce((value, element) => math.max(value, element));
     lastUpdate = DateTime.fromMillisecondsSinceEpoch(lastUpdateMs);
   } else {
     lastUpdate = repo.createdAt;

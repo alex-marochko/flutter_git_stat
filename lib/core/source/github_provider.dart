@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:graphql/client.dart';
 
 class GithubProvider {
@@ -14,26 +16,31 @@ class GithubProvider {
   static final _authLink = AuthLink(
       getToken: () =>
           'Bearer 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');
-  // TODO set via RemoteConfig
+  // TODO set via RemoteConfig (is it safe, by the way?)
 
   static final _link = _authLink.concat(_httpLink);
 
-  Future<Map<String, dynamic>?> sendQuery(
+  Future<QueryResult<Object?>> sendQuery(
     String queryText,
     Map<String, dynamic>? parameters,
   ) async {
     final QueryOptions options = QueryOptions(
+      pollInterval:
+          const Duration(seconds: 10), // TODO - separate config constants
       document: gql(queryText),
       variables: parameters ?? {},
+      errorPolicy: ErrorPolicy.all,
+      onError: (error) {
+        log('guthub_provider: $error');
+        throw (error ?? Exception('Unknown error'));
+      },
+      onComplete: (data) {
+        log('guthub_provider: $data');
+        // return data;
+      },
     );
 
-    final QueryResult result = await _client.query(options);
-
-/*
-    if (result.hasException) {
-      print(result.exception.toString());
-    }
-*/
-    return result.data;
+    final result = await _client.query(options);
+    return result;
   }
 }

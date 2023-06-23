@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ReleasesState {
   ReleasesStatus get status => throw _privateConstructorUsedError;
   List<ReleasedRepository> get repos => throw _privateConstructorUsedError;
+  Message? get message => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ReleasesStateCopyWith<ReleasesState> get copyWith =>
@@ -30,7 +31,10 @@ abstract class $ReleasesStateCopyWith<$Res> {
           ReleasesState value, $Res Function(ReleasesState) then) =
       _$ReleasesStateCopyWithImpl<$Res, ReleasesState>;
   @useResult
-  $Res call({ReleasesStatus status, List<ReleasedRepository> repos});
+  $Res call(
+      {ReleasesStatus status,
+      List<ReleasedRepository> repos,
+      Message? message});
 }
 
 /// @nodoc
@@ -48,6 +52,7 @@ class _$ReleasesStateCopyWithImpl<$Res, $Val extends ReleasesState>
   $Res call({
     Object? status = null,
     Object? repos = null,
+    Object? message = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -58,6 +63,10 @@ class _$ReleasesStateCopyWithImpl<$Res, $Val extends ReleasesState>
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
               as List<ReleasedRepository>,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as Message?,
     ) as $Val);
   }
 }
@@ -70,7 +79,10 @@ abstract class _$$_ReleasesStateCopyWith<$Res>
       __$$_ReleasesStateCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ReleasesStatus status, List<ReleasedRepository> repos});
+  $Res call(
+      {ReleasesStatus status,
+      List<ReleasedRepository> repos,
+      Message? message});
 }
 
 /// @nodoc
@@ -86,6 +98,7 @@ class __$$_ReleasesStateCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? repos = null,
+    Object? message = freezed,
   }) {
     return _then(_$_ReleasesState(
       status: null == status
@@ -96,6 +109,10 @@ class __$$_ReleasesStateCopyWithImpl<$Res>
           ? _value._repos
           : repos // ignore: cast_nullable_to_non_nullable
               as List<ReleasedRepository>,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as Message?,
     ));
   }
 }
@@ -105,8 +122,11 @@ class __$$_ReleasesStateCopyWithImpl<$Res>
 class _$_ReleasesState implements _ReleasesState {
   const _$_ReleasesState(
       {this.status = ReleasesStatus.initial,
-      final List<ReleasedRepository> repos = const []})
-      : _repos = repos;
+      final List<ReleasedRepository> repos = const [],
+      this.message})
+      : assert((status == ReleasesStatus.failure) ? (message != null) : true,
+            'Error state without Failure object'),
+        _repos = repos;
 
   @override
   @JsonKey()
@@ -121,8 +141,11 @@ class _$_ReleasesState implements _ReleasesState {
   }
 
   @override
+  final Message? message;
+
+  @override
   String toString() {
-    return 'ReleasesState(status: $status, repos: $repos)';
+    return 'ReleasesState(status: $status, repos: $repos, message: $message)';
   }
 
   @override
@@ -131,12 +154,13 @@ class _$_ReleasesState implements _ReleasesState {
         (other.runtimeType == runtimeType &&
             other is _$_ReleasesState &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality().equals(other._repos, _repos));
+            const DeepCollectionEquality().equals(other._repos, _repos) &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, status, const DeepCollectionEquality().hash(_repos));
+  int get hashCode => Object.hash(runtimeType, status,
+      const DeepCollectionEquality().hash(_repos), message);
 
   @JsonKey(ignore: true)
   @override
@@ -148,12 +172,15 @@ class _$_ReleasesState implements _ReleasesState {
 abstract class _ReleasesState implements ReleasesState {
   const factory _ReleasesState(
       {final ReleasesStatus status,
-      final List<ReleasedRepository> repos}) = _$_ReleasesState;
+      final List<ReleasedRepository> repos,
+      final Message? message}) = _$_ReleasesState;
 
   @override
   ReleasesStatus get status;
   @override
   List<ReleasedRepository> get repos;
+  @override
+  Message? get message;
   @override
   @JsonKey(ignore: true)
   _$$_ReleasesStateCopyWith<_$_ReleasesState> get copyWith =>

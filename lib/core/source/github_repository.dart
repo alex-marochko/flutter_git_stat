@@ -1,10 +1,11 @@
+import 'dart:developer';
+
 import 'package:git_stat/core/source/github_provider.dart';
-import 'package:git_stat/my_repos/model/my_repo.dart';
+import 'package:git_stat/core/source/request_failure.dart';
 import 'package:git_stat/releases/model/released_repository.dart';
 import 'package:git_stat/releases/source/released_repository_dto.dart';
+import 'package:graphql/client.dart';
 import 'package:intl/intl.dart';
-
-import '../../my_repos/source/my_repo_dto.dart';
 
 // Decided to keep all Github requests in one class, because separating without
 // base class leads to code repeating, and while extending from base class
@@ -17,32 +18,13 @@ class GithubRepository {
 
   late final GithubProvider _provider;
 
-  Future<List<MyRepo>> getMyRepositories() async {
-    const readRepositories = """
-      query ReadRepositories(\$nRepositories: Int!) {
-        viewer {
-          repositories(last: \$nRepositories) {
-            nodes {
-              id
-              name
-              viewerHasStarred
-            }
-          }
-        }
-      }
-      """;
-
-    const param = {'nRepositories': 50};
-
-    final rawData = await _provider.sendQuery(readRepositories, param);
-
-    if (rawData == null || rawData.isEmpty) throw Exception('No data');
-
-    return List.from(rawData['viewer']['repositories']['nodes']!
-        .map((value) => MyRepoDto.fromJson(value).toDomain()));
-  }
-
-  Future<dynamic> getReleasedRepositories(DateTime fromDateTime) async {
+  Future<
+          (
+            List<ReleasedRepository>?,
+            RequestFailure?,
+            bool?
+          )> // 'bool' for 'cached'
+      getReleasedRepositories(DateTime fromDateTime) async {
     final formatter = DateFormat('yyyy-MM-dd');
     final String fromString = formatter.format(fromDateTime);
     // TODO the list looks a bit strange when is sorted by stars. Change to date?
@@ -87,14 +69,61 @@ class GithubRepository {
             } 
             ''';
 
-    final rawData = await _provider.sendQuery(
-      updatedReposQuery,
-      {},
-    );
+    late final QueryResult<Object?> queryResult;
+    late final List<ReleasedRepository>? data;
+    RequestFailure? failure;
+    late final bool? cache;
 
-    if (rawData == null || rawData.isEmpty) throw Exception('No data');
+    try {
+      queryResult = await _provider.sendQuery(
+        updatedReposQuery,
+        {},
+      );
 
-    return List<ReleasedRepository>.from(rawData['search']['edges']!
-        .map((value) => ReleasedRepositoryDto.fromJson(value).toModel()));
+      // final rawData = queryResult.data;
+
+/*
+        if ((rawData == null || rawData.isEmpty) && queryResult.hasException) {
+          // no data, just errors
+          throw queryResult.exception!;
+        }
+*/
+      log('$this:\n'
+          'hasException: ${queryResult.hasException}\n'
+          'exceptions: ${queryResult.exception}\n'
+          'data: ${queryResult.data}\n'
+          'source: ${queryResult.source}');
+
+      data = (queryResult.data == null)
+          ? null
+          : List<ReleasedRepository>.from(queryResult.data!['search']['edges']
+              .map((value) => ReleasedRepositoryDto.fromJson(value).toModel()));
+    } catch (error, stackTrace) {
+      log('github_repository: cacth error: ${error.toString()}\n$stackTrace');
+      if (error is OperationException) {
+        final errorsMessages = error.graphqlErrors.fold<String>(
+            '', (previousValue, element) => '$previousValue; $element');
+        failure = RequestFailure.server(errorsMessages);
+      } else {
+        failure = RequestFailure.something(error.toString());
+      }
+    }
+
+    if (failure == null && queryResult.hasException) {
+      if (queryResult.exception!.linkException != null) {
+        final linkException = queryResult.exception!.linkException;
+        if (linkException is NetworkException) {
+          failure = RequestFailure.network(linkException.message);
+        } else if (linkException is ServerException) {
+          failure =
+              RequestFailure.server(linkException.originalException.toString());
+        }
+      }
+      failure ??= RequestFailure.something(queryResult.exception.toString());
+    }
+
+    cache = queryResult.source == QueryResultSource.cache;
+
+    return (data, failure, cache);
   }
 }

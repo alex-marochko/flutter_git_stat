@@ -5,17 +5,24 @@ enum ReleasesStatus {
   loading,
   success,
   failure;
+}
 
-  bool get isInitial => this == ReleasesStatus.initial;
-  bool get isLoading => this == ReleasesStatus.loading;
-  bool get isSuccess => this == ReleasesStatus.success;
-  bool get isFailure => this == ReleasesStatus.failure;
+enum MessageStatus { good, warning, bad }
+
+class Message {
+  final String text;
+  final MessageStatus status;
+
+  const Message(this.text, this.status);
 }
 
 @freezed
 class ReleasesState with _$ReleasesState {
+  @Assert('(status == ReleasesStatus.failure)? (message != null) : true',
+      'Error state without Failure object')
   const factory ReleasesState({
     @Default(ReleasesStatus.initial) ReleasesStatus status,
     @Default([]) List<ReleasedRepository> repos,
+    Message? message,
   }) = _ReleasesState;
 }

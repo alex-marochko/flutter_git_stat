@@ -26,6 +26,7 @@ dependencies:
   equatable: ^2.0.5
   url_launcher: ^6.1.11
   markdown: ^7.1.0
+  fpdart: ^0.6.0
 
 dev_dependencies:
   flutter_test:
