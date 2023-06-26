@@ -15,7 +15,7 @@ class GithubProvider {
   static final _httpLink = HttpLink('https://api.github.com/graphql');
   static final _authLink = AuthLink(
       getToken: () =>
-          'Bearer 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');
+          'Bearer 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'); // readonly token
   // TODO set via RemoteConfig (is it safe, by the way?)
 
   static final _link = _authLink.concat(_httpLink);

@@ -4,7 +4,7 @@ Git statistics & charts
 
 _Sandbox project to try different features and approaches_
 
-To browse new or freshly updated Flutter or Flutter-related repos.
+App to browse new or freshly updated Flutter or Flutter-related repos.
 
 Works via GraphQL
 
