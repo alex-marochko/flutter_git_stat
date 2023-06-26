@@ -65,7 +65,7 @@ class _AppPageState extends State<AppPage> {
                   child: Center(
                     child: switch (state.page) {
                       NavigationPages.releases => const ReleasesPage(),
-                      _ => const Text('Others'),
+                      _ => const Text('under construction'),
                     },
                   ),
                 ),

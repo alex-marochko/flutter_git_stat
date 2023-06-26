@@ -2,15 +2,10 @@
 
 Git statistics & charts
 
-## Getting Started
+_Sandbox project to try different features and approaches_
 
-This project is a starting point for a Flutter application.
+To browse new or freshly updated Flutter or Flutter-related repos.
 
-A few resources to get you started if this is your first Flutter project:
+Works via GraphQL
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://flutter-git-stat.netlify.app/

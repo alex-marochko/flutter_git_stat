@@ -5,7 +5,7 @@ enum NavigationPages { releases, top, chart }
 class NavigationState extends Equatable {
   const NavigationState({this.page = NavigationPages.releases});
 
-  const NavigationState.initial() : this(page: NavigationPages.top);
+  const NavigationState.initial() : this(page: NavigationPages.releases);
   const NavigationState.releases() : this(page: NavigationPages.releases);
   const NavigationState.top() : this(page: NavigationPages.top);
   const NavigationState.chart() : this(page: NavigationPages.chart);
