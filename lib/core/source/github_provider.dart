@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:graphql/client.dart';
 
 class GithubProvider {
@@ -13,10 +14,10 @@ class GithubProvider {
   late final GraphQLClient _client;
 
   static final _httpLink = HttpLink('https://api.github.com/graphql');
+  static final _token = FirebaseRemoteConfig.instance.getString('github_token');
   static final _authLink = AuthLink(
       getToken: () =>
-          'Bearer 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'); // readonly token
-  // TODO set via RemoteConfig (is it safe, by the way?)
+          'Bearer $_token'); // this should be a token with read-only permissions
 
   static final _link = _authLink.concat(_httpLink);
 
